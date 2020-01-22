@@ -7,6 +7,7 @@ import (
 	"net"
 	"os"
 	"sync"
+	"time"
 
 	flags "github.com/jessevdk/go-flags"
 )
@@ -56,6 +57,9 @@ func main() {
 	for scanner.Scan() {
 		wg.Add(1)
 		go worker(scanner.Text(), &wg, res)
+		if opts.Wait > 0 {
+			time.Sleep(time.Duration(opts.Wait) * time.Millisecond)
+		}
 	}
 	if err := scanner.Err(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
