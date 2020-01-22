@@ -13,8 +13,9 @@ import (
 
 var opts struct {
 	ResolverIP string `short:"r" long:"resolver" description:"IP of the DNS resolver to use for lookups"`
-	Protocol   string `short:"P" long:"protocol" choice:"tcp" choice:"udp" default:"udp" description:"Protocol to use for lookups"`
-	Port       uint16 `short:"p" long:"port" default:"53" description:"Port to bother the specified DNS resolver on"`
+	Protocol   string `short:"P" long:"protocol" description:"Protocol to use for lookups" choice:"tcp" choice:"udp" default:"udp" `
+	Port       uint16 `short:"p" long:"port" description:"Port to bother the specified DNS resolver on" default:"53" `
+	Wait       uint   `short:"w" long:"wait" description:"Wait n-miliseconds between lookups"`
 }
 
 func worker(ip string, wg *sync.WaitGroup, res chan string) {
